@@ -1,0 +1,106 @@
+{
+	"categories": [
+		{
+			"uuid": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"title": "Task",
+			"color": "569eff"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "73eea397-c6e7-403a-af3e-39d8f79e0316",
+			"title": "Todo",
+			"tasks": [
+				"d293d398-4e52-4dc9-bae4-3fec86127088",
+				"237d2632-bcdc-47e0-b4fc-559b1ef3ad9f",
+				"2caa9197-68d9-499b-a6c5-8a05cbffa09e",
+				"0fde1028-eca5-41d1-8260-b984fe1db4d0",
+				"492ec844-8f4e-4cba-bd8c-91c26653cbca",
+				"5b1b4857-dd61-4ff3-8b52-91f499327c4e",
+				"6e27a836-31d4-4d8b-a531-68baa70665fc",
+				"607fb727-40c4-435d-b21a-be17eb49f375"
+			]
+		},
+		{
+			"uuid": "a8f921b3-b1c1-47e3-b6c7-cfb548ccce2f",
+			"title": "Doing",
+			"tasks": []
+		},
+		{
+			"uuid": "efca3089-ecee-4e5e-839c-954c2e8d7895",
+			"title": "Done",
+			"tasks": []
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "d293d398-4e52-4dc9-bae4-3fec86127088",
+			"title": "platform arena",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "237d2632-bcdc-47e0-b4fc-559b1ef3ad9f",
+			"title": "height sprite and shadow",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "0fde1028-eca5-41d1-8260-b984fe1db4d0",
+			"title": "player basic movement",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "492ec844-8f4e-4cba-bd8c-91c26653cbca",
+			"title": "weapon system + attacks",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "5b1b4857-dd61-4ff3-8b52-91f499327c4e",
+			"title": "flying enemy",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "6e27a836-31d4-4d8b-a531-68baa70665fc",
+			"title": "grounded enemy",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "2caa9197-68d9-499b-a6c5-8a05cbffa09e",
+			"title": "height sprite proper bounce",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "607fb727-40c4-435d-b21a-be17eb49f375",
+			"title": "weapon swap on enemy kill",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"73eea397-c6e7-403a-af3e-39d8f79e0316"
+			],
+			[
+				"a8f921b3-b1c1-47e3-b6c7-cfb548ccce2f"
+			],
+			[
+				"efca3089-ecee-4e5e-839c-954c2e8d7895"
+			]
+		]
+	}
+}
