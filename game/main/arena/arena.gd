@@ -44,3 +44,5 @@ func update_arena(new_radius: float) -> void:
 	var shape = CircleShape2D.new()
 	shape.radius = new_radius
 	collision.shape = shape
+	
+	MainCam.shake(1, 15, 15)

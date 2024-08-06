@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://r8gin7txfwsn"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_7agls"]
+[ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_grdmo"]
+[ext_resource type="PackedScene" uid="uid://ck7giesvc1amw" path="res://components/height_sprite/height_sprite.tscn" id="2_f80gu"]
+[ext_resource type="Texture2D" uid="uid://dbbp338ckjwna" path="res://assets/textures/player.png" id="2_uwysf"]
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "shadow")]
+script = ExtResource("1_7agls")
+sprite = NodePath("HeightSprite")
+shadow = NodePath("Shadow")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Shadow" parent="." node_paths=PackedStringArray("caster") instance=ExtResource("1_grdmo")]
+texture = ExtResource("2_uwysf")
+offset = Vector2(-1, 1)
+caster = NodePath("../HeightSprite")
+shadow_offset = Vector2(-1, 1)
+max_height = 256.0
+
+[node name="HeightSprite" parent="." instance=ExtResource("2_f80gu")]
+texture = ExtResource("2_uwysf")
+bounce = 0.75
