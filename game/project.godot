@@ -56,7 +56,20 @@ move_right={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="world_colliders"
+2d_physics/layer_3="player"
+2d_physics/layer_4="enemies"
+2d_physics/layer_5="player_attacks"
+2d_physics/layer_6="enemy_attacks"
+2d_physics/layer_7="global_attacks"
+2d_physics/layer_8="arena"
+2d_physics/layer_9="arena_colliders"
+
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

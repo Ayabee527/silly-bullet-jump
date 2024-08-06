@@ -1,3 +1,17 @@
-[gd_scene format=3 uid="uid://djtrw3ywrcfyr"]
+[gd_scene load_steps=3 format=3 uid="uid://djtrw3ywrcfyr"]
 
-[node name="Main" type="Node2D"]
+[ext_resource type="PackedScene" uid="uid://qt1goniw06x" path="res://main/arena/arena.tscn" id="1_n3q3j"]
+[ext_resource type="Script" path="res://main/main.gd" id="1_qmsla"]
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("arena")]
+script = ExtResource("1_qmsla")
+arena = NodePath("Arena")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(256, 256)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[node name="Arena" parent="." instance=ExtResource("1_n3q3j")]
+position = Vector2(128, 128)
