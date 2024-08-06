@@ -1,6 +1,8 @@
 class_name HeightSprite
 extends Sprite2D
 
+signal ground_hit()
+
 @export var height: float = 0.0
 @export var bounce: float = 0.0
 
@@ -15,6 +17,7 @@ func _process(delta: float) -> void:
 	offset = Vector2(0, -height).rotated(-global_rotation)
 	
 	if height < 1.0 and not is_zero_approx(speed):
+		ground_hit.emit()
 		speed *= -bounce
 		height = max(0.0, height)
 	
@@ -40,8 +43,6 @@ func jump(jump_height: float, jump_time_to_peak: float, jump_time_to_fall: float
 		fall_gravity = ((-2.0 * jump_height) / (jump_time_to_fall * jump_time_to_fall)) * -1.0
 		if jump_time_to_peak <= 0.0:
 			jump_gravity = fall_gravity
-	
-	prints(jump_velocity, jump_gravity, fall_gravity)
 	
 	if jump_velocity != 0.0:
 		speed = jump_velocity

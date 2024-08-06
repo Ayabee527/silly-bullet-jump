@@ -5,18 +5,22 @@ signal resize_started(radius: float)
 signal resize_finished(radius: float)
 
 @export var color: Color = Color(0.259, 0.259, 0.259)
-@export var radius: float = 256.0:
+@export var radius: float = 0.0:
 	set = set_radius
 
 @export_group("Inner Dependencies")
 @export var shape: Polygon2D
 @export var collision: CollisionShape2D
 
-var last_radius: float = 256.0
+var last_radius: float = 0.0
 var detail: int = 32
 
 func _ready() -> void:
-	shape.color = color
+	var tween = create_tween()
+	tween.tween_property(
+		shape, "color",
+		color, 1.5
+	).from(Color(0.0, 0.0, 0.0, 0.0))
 	update_arena(radius)
 
 func generate() -> void:
@@ -27,7 +31,7 @@ func set_radius(new_radius: float) -> void:
 	resize_started.emit(radius)
 	var tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
 	tween.tween_method(
-		update_arena, last_radius, radius, 3.0
+		update_arena, last_radius, radius, 1.5
 	) 
 	last_radius = radius
 	await tween.finished
