@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1lcu4cgm3hjd"]
+
+[ext_resource type="Script" path="res://components/weapon/weapon_handler.gd" id="1_3mhlk"]
+[ext_resource type="Texture2D" uid="uid://bjxxn4vcj88r2" path="res://assets/textures/circle.png" id="2_mnvo6"]
+
+[sub_resource type="Curve" id="Curve_7iect"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_og0m4"]
+curve = SubResource("Curve_7iect")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ho7cy"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 360.0
+spread = 60.0
+initial_velocity_min = 4.0
+initial_velocity_max = 16.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_og0m4")
+
+[node name="WeaponHandler" type="Node2D"]
+script = ExtResource("1_3mhlk")
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(8, 0)
+
+[node name="Dazzle" type="GPUParticles2D" parent="Muzzle"]
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_ho7cy")
+texture = ExtResource("2_mnvo6")
+lifetime = 0.5
+
+[node name="FireTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
