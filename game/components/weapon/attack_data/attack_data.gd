@@ -3,4 +3,7 @@ extends Resource
 
 signal expired()
 
-@export var attack: PackedScene
+@export var hitbox_data: HitboxData
+
+var collision_layer: int
+var collision_mask: int

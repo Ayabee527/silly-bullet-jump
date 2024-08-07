@@ -2,7 +2,7 @@ extends PlayerState
 
 func enter(_msg:={}) -> void:
 	player.hide()
-	await get_tree().create_timer(3.0, false).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	
 	player.sprite.jump(256.0, 0.0, 1.0)
 	await get_tree().process_frame
@@ -10,6 +10,8 @@ func enter(_msg:={}) -> void:
 	
 	await player.sprite.ground_hit
 	
+	player.weapon_handler.show()
 	player.land_particles.restart()
 	player.spawned.emit()
+	player.has_spawned = true
 	state_machine.transition_to("Idle")

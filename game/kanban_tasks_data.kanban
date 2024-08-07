@@ -20,13 +20,19 @@
 			"uuid": "a8f921b3-b1c1-47e3-b6c7-cfb548ccce2f",
 			"title": "Doing",
 			"tasks": [
-				"492ec844-8f4e-4cba-bd8c-91c26653cbca"
+				"33018319-515c-4602-ad92-21c87439cd2e",
+				"57f1b1fd-1917-4c3d-bc79-c4c5b6a66761",
+				"2af7c30d-ec3c-4d6b-99d9-6a7453579049",
+				"2f49c3a6-a463-4807-b725-84d4e3ba22f5",
+				"b8ad0d90-04d6-47a8-9c14-72d5f6c44895"
 			]
 		},
 		{
 			"uuid": "efca3089-ecee-4e5e-839c-954c2e8d7895",
 			"title": "Done",
 			"tasks": [
+				"bddf2a9b-4e02-4cbf-9667-70838273c394",
+				"6a3a4240-af43-4b7f-83f3-98e080ba81cc",
 				"0fde1028-eca5-41d1-8260-b984fe1db4d0",
 				"d293d398-4e52-4dc9-bae4-3fec86127088",
 				"237d2632-bcdc-47e0-b4fc-559b1ef3ad9f",
@@ -57,13 +63,6 @@
 			"steps": []
 		},
 		{
-			"uuid": "492ec844-8f4e-4cba-bd8c-91c26653cbca",
-			"title": "weapon system + attacks",
-			"description": "",
-			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
-			"steps": []
-		},
-		{
 			"uuid": "5b1b4857-dd61-4ff3-8b52-91f499327c4e",
 			"title": "flying enemy",
 			"description": "",
@@ -87,6 +86,55 @@
 		{
 			"uuid": "607fb727-40c4-435d-b21a-be17eb49f375",
 			"title": "weapon swap on enemy kill",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "6a3a4240-af43-4b7f-83f3-98e080ba81cc",
+			"title": "weapon system",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "bddf2a9b-4e02-4cbf-9667-70838273c394",
+			"title": "projectile attack",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "57f1b1fd-1917-4c3d-bc79-c4c5b6a66761",
+			"title": "explosion attack",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "2af7c30d-ec3c-4d6b-99d9-6a7453579049",
+			"title": "lightning attack",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "2f49c3a6-a463-4807-b725-84d4e3ba22f5",
+			"title": "laser attack",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "33018319-515c-4602-ad92-21c87439cd2e",
+			"title": "fall projectile attack",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "b8ad0d90-04d6-47a8-9c14-72d5f6c44895",
+			"title": "weapon sounds",
 			"description": "",
 			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
 			"steps": []

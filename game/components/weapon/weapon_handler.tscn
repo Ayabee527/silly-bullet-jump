@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1lcu4cgm3hjd"]
+[gd_scene load_steps=9 format=3 uid="uid://b1lcu4cgm3hjd"]
 
 [ext_resource type="Script" path="res://components/weapon/weapon_handler.gd" id="1_3mhlk"]
 [ext_resource type="Texture2D" uid="uid://bjxxn4vcj88r2" path="res://assets/textures/circle.png" id="2_mnvo6"]
@@ -16,8 +16,8 @@ particle_flag_disable_z = true
 angle_min = 1.07288e-05
 angle_max = 360.0
 spread = 60.0
-initial_velocity_min = 4.0
-initial_velocity_max = 16.0
+initial_velocity_min = 16.0
+initial_velocity_max = 32.0
 angular_velocity_min = -720.0
 angular_velocity_max = 720.0
 gravity = Vector3(0, 0, 0)
@@ -25,8 +25,28 @@ scale_min = 0.1
 scale_max = 0.2
 scale_curve = SubResource("CurveTexture_og0m4")
 
-[node name="WeaponHandler" type="Node2D"]
+[sub_resource type="Curve" id="Curve_5okns"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uyyyf"]
+curve = SubResource("Curve_5okns")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uhyea"]
+particle_flag_disable_z = true
+angle_min = 35.0
+angle_max = 55.0
+gravity = Vector3(0, 0, 0)
+scale_min = 12.0
+scale_max = 16.0
+scale_curve = SubResource("CurveTexture_uyyyf")
+
+[node name="WeaponHandler" type="Node2D" node_paths=PackedStringArray("dazzle", "flash", "muzzle", "fire_timer")]
 script = ExtResource("1_3mhlk")
+dazzle = NodePath("Muzzle/Dazzle")
+flash = NodePath("Muzzle/Flash")
+muzzle = NodePath("Muzzle")
+fire_timer = NodePath("FireTimer")
 
 [node name="Muzzle" type="Marker2D" parent="."]
 position = Vector2(8, 0)
@@ -36,6 +56,13 @@ amount = 25
 process_material = SubResource("ParticleProcessMaterial_ho7cy")
 texture = ExtResource("2_mnvo6")
 lifetime = 0.5
+
+[node name="Flash" type="GPUParticles2D" parent="Muzzle"]
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_uhyea")
+lifetime = 0.2
+one_shot = true
 
 [node name="FireTimer" type="Timer" parent="."]
 one_shot = true

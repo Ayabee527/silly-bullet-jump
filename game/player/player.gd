@@ -12,6 +12,9 @@ signal spawned()
 @export var sprite: HeightSprite
 @export var shadow: Shadow
 @export var land_particles: GPUParticles2D
+@export var weapon_handler: WeaponHandler
+
+var has_spawned: bool = false
 
 func _ready() -> void:
 	pass
@@ -22,7 +25,17 @@ func _physics_process(delta: float) -> void:
 		look_transform, delta * 10.0
 	)
 	
+	if has_spawned:
+		if Input.is_action_just_pressed("shoot"):
+			weapon_handler.firing = true
+		elif Input.is_action_just_released("shoot"):
+			weapon_handler.firing = false
+	
 	move_and_slide()
 
 func get_move_vector() -> Vector2:
 	return Input.get_vector("move_left", "move_right", "move_up", "move_down")
+
+
+func _on_height_sprite_height_changed(new_height: float) -> void:
+	weapon_handler.position = sprite.offset

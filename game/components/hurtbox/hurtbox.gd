@@ -2,7 +2,6 @@ class_name Hurtbox
 extends Area2D
 
 signal hurt(hitbox: Hitbox)
-signal knocked_back(knockback: Vector2)
 
 @export_group("Outer Dependencies")
 @export var health: Health
@@ -10,9 +9,11 @@ signal knocked_back(knockback: Vector2)
 @export_group("Inner Dependencies")
 @export var invinc_timer: Timer
 
-var active_hitboxes: Array[Hitbox] = []
+var active_hitboxes: Array[Hitbox] = []:
+	set = set_active_hitboxes
 
-func _process(delta: float) -> void:
+func set_active_hitboxes(new_active_hitboxes: Array[Hitbox]) -> void:
+	active_hitboxes = new_active_hitboxes
 	if active_hitboxes.size() > 0:
 		if invinc_timer.is_stopped():
 			take_damage()
@@ -22,11 +23,7 @@ func take_damage() -> void:
 	
 	health.hurt(chosen_hitbox.damage)
 	
-	var knockback_dir: Vector2 = chosen_hitbox.global_position.direction_to(global_position)
-	var knockback: Vector2 = knockback_dir * chosen_hitbox.knockback_strength
-	knocked_back.emit(knockback)
-	
-	invinc_timer.start(chosen_hitbox.invinc_time)
+	invinc_timer.start(chosen_hitbox.damage_cooldown)
 
 func _on_area_entered(area: Area2D) -> void:
 	if area is Hitbox and not active_hitboxes.has(area) and not area.owner == owner:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://r8gin7txfwsn"]
+[gd_scene load_steps=20 format=3 uid="uid://r8gin7txfwsn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_7agls"]
 [ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_grdmo"]
@@ -10,6 +10,11 @@
 [ext_resource type="Script" path="res://player/states/move.gd" id="4_jqmpt"]
 [ext_resource type="Script" path="res://player/states/jump.gd" id="5_456ib"]
 [ext_resource type="Texture2D" uid="uid://bjxxn4vcj88r2" path="res://assets/textures/circle.png" id="9_00173"]
+[ext_resource type="PackedScene" uid="uid://b1lcu4cgm3hjd" path="res://components/weapon/weapon_handler.tscn" id="11_xen4r"]
+[ext_resource type="Script" path="res://components/weapon/weapon.gd" id="12_sljwx"]
+[ext_resource type="Script" path="res://components/weapon/collision_data/collision_data.gd" id="12_t4dnd"]
+[ext_resource type="Resource" uid="uid://df1u6soyuk36s" path="res://player/default.tres" id="13_4hnll"]
+[ext_resource type="Resource" uid="uid://cd1fr1x7r2mcq" path="res://player/default2.tres" id="15_0a4om"]
 
 [sub_resource type="Curve" id="Curve_w76bd"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -38,11 +43,17 @@ scale_min = 0.1
 scale_max = 0.2
 scale_curve = SubResource("CurveTexture_l7ej8")
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "shadow", "land_particles")]
+[sub_resource type="Resource" id="Resource_vsh65"]
+script = ExtResource("12_t4dnd")
+collision_layer = 16
+collision_mask = 8
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "shadow", "land_particles", "weapon_handler") groups=["player"]]
 script = ExtResource("1_7agls")
 sprite = NodePath("HeightSprite")
 shadow = NodePath("Shadow")
 land_particles = NodePath("Land")
+weapon_handler = NodePath("WeaponHandler")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_jpy1m")
@@ -70,7 +81,6 @@ one_shot = true
 texture = ExtResource("2_uwysf")
 offset = Vector2(-1, 1)
 caster = NodePath("../HeightSprite")
-shadow_offset = Vector2(-1, 1)
 max_height = 256.0
 
 [node name="Land" type="GPUParticles2D" parent="."]
@@ -86,4 +96,10 @@ randomness = 1.0
 texture = ExtResource("2_uwysf")
 bounce = 0.25
 
+[node name="WeaponHandler" parent="." instance=ExtResource("11_xen4r")]
+visible = false
+collision_data = SubResource("Resource_vsh65")
+weapons = Array[ExtResource("12_sljwx")]([ExtResource("13_4hnll"), ExtResource("15_0a4om")])
+
 [connection signal="timeout" from="StateMachine/Jump/LandTimer" to="StateMachine/Jump" method="_on_land_timer_timeout"]
+[connection signal="height_changed" from="HeightSprite" to="." method="_on_height_sprite_height_changed"]

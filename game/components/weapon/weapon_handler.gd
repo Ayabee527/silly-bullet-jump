@@ -3,17 +3,30 @@ extends Node2D
 
 signal fired()
 
+@export var muzzle_distance: float = 8.0
+@export var collision_data: CollisionData
+
 @export var weapons: Array[Weapon]:
 	set = set_weapons
 
 @export_group("Inner Dependencies")
 @export var dazzle: GPUParticles2D
+@export var flash: GPUParticles2D
 @export var muzzle: Marker2D
 @export var fire_timer: Timer
 
 var firing: bool = false:
 	set = set_firing
-var weapon_idx: int = 0
+var weapon_idx: int = 0:
+	set = set_weapon_idx
+
+func _ready() -> void:
+	muzzle.position = Vector2.RIGHT * muzzle_distance
+
+func set_weapon_idx(new_weapon_idx: int) -> void:
+	weapon_idx = new_weapon_idx
+	if weapons.size() > 0:
+		update_dazzle(weapons[weapon_idx].color)
 
 func set_weapons(new_weapons: Array[Weapon]) -> void:
 	weapons = new_weapons
@@ -27,15 +40,57 @@ func set_firing(new_firing: bool) -> void:
 func shoot() -> void:
 	var weapon: Weapon = weapons[weapon_idx]
 	
+	for i: int in range(weapon.shots_per):
+		var attack = weapon.attack.instantiate() as Node2D
+		var attack_data = weapon.attack_data.duplicate()
+		if "attack_data" in attack:
+			attack.attack_data = attack_data
+		
+		var shoot_angle = weapon.rotation_offset + (weapon.angle_per_shot * i)
+		
+		attack.collision_data = collision_data
+		attack.global_position = muzzle.global_position
+		attack.global_rotation = muzzle.global_rotation
+		attack.global_rotation += deg_to_rad(shoot_angle)
+		attack.global_rotation += deg_to_rad(
+			randf_range(-weapon.spread, weapon.spread)
+		)
+		
+		if weapon.payload:
+			attack_data.expired.connect( unleash_payload.bind(attack, weapon.payload) )
+		
+		get_tree().current_scene.add_child(attack)
+	
+	MainCam.shake(weapon.camera_shake, 15, 15)
+	flash.restart()
 	fire_timer.start(weapon.cool_down)
-	weapon_idx += 1
-	weapon_idx = wrapi(weapon_idx, 0, weapons.size() - 1)
+	weapon_idx = wrapi(weapon_idx + 1, 0, weapons.size())
 
 func update_dazzle(color: Color) -> void:
 	dazzle.modulate = color
+	flash.modulate = color
 
 func unleash_payload(carrier: Node2D, payload: Weapon) -> void:
-	pass
+	for i: int in range(payload.shots_per):
+		var attack = payload.attack.instantiate() as Node2D
+		var attack_data = payload.attack_data.duplicate()
+		if "attack_data" in attack:
+			attack.attack_data = attack_data
+		
+		var shoot_angle = payload.rotation_offset + (payload.angle_per_shot * i)
+		
+		attack.collision_data = collision_data
+		attack.global_position = carrier.global_position
+		attack.global_rotation = carrier.global_rotation
+		attack.global_rotation += deg_to_rad(shoot_angle)
+		attack.global_rotation += deg_to_rad(
+			randf_range(-payload.spread, payload.spread)
+		)
+		
+		if payload.payload:
+			attack_data.expired.connect( unleash_payload.bind(attack, payload.payload) )
+		
+		get_tree().current_scene.add_child(attack)
 
 func _on_fire_timer_timeout() -> void:
 	if firing:
