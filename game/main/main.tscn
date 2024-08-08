@@ -19,5 +19,4 @@ color = Color(0, 0, 0, 1)
 [node name="Arena" parent="." instance=ExtResource("1_n3q3j")]
 position = Vector2(128, 128)
 
-[node name="Player" parent="." instance=ExtResource("3_vajbg")]
-position = Vector2(128, 128)
+[node name="Player" parent="Arena" instance=ExtResource("3_vajbg")]
