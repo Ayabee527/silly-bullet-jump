@@ -42,7 +42,7 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2d7rp"]
 radius = 4.0
 
-[node name="FallProjectile" type="Area2D" node_paths=PackedStringArray("outtie", "innie", "shadow", "trail_holder", "trail", "expire_particles", "hitbox", "collision", "hitbox_collision")]
+[node name="FallProjectile" type="Area2D" node_paths=PackedStringArray("outtie", "innie", "shadow", "trail_holder", "trail", "expire_particles", "ground_hitbox", "air_hitbox", "collision", "ground_hitbox_collision", "air_hitbox_collision")]
 script = ExtResource("1_2we8y")
 outtie = NodePath("Outtie")
 innie = NodePath("Innie")
@@ -50,9 +50,11 @@ shadow = NodePath("Shadow")
 trail_holder = NodePath("TrailHolder")
 trail = NodePath("TrailHolder/Trail")
 expire_particles = NodePath("Expire")
-hitbox = NodePath("Hitbox")
+ground_hitbox = NodePath("GroundHitbox")
+air_hitbox = NodePath("AirHitbox")
 collision = NodePath("CollisionShape2D")
-hitbox_collision = NodePath("Hitbox/CollisionShape2D")
+ground_hitbox_collision = NodePath("GroundHitbox/CollisionShape2D")
+air_hitbox_collision = NodePath("AirHitbox/CollisionShape2D")
 
 [node name="Shadow" parent="." node_paths=PackedStringArray("caster") instance=ExtResource("1_4bt7i")]
 texture = ExtResource("3_rh75g")
@@ -85,9 +87,14 @@ texture = ExtResource("7_qwa75")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7gsbw")
 
-[node name="Hitbox" parent="." instance=ExtResource("7_l3q56")]
+[node name="GroundHitbox" parent="." instance=ExtResource("7_l3q56")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GroundHitbox"]
+shape = SubResource("CircleShape2D_2d7rp")
+
+[node name="AirHitbox" parent="." instance=ExtResource("7_l3q56")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AirHitbox"]
 shape = SubResource("CircleShape2D_2d7rp")
 
 [connection signal="bounced" from="Outtie" to="." method="_on_outtie_bounced"]

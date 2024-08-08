@@ -13,9 +13,11 @@ extends Area2D
 @export var trail: Trail
 @export var expire_particles: GPUParticles2D
 
-@export var hitbox: Hitbox
+@export var ground_hitbox: Hitbox
+@export var air_hitbox: Hitbox
 @export var collision: CollisionShape2D
-@export var hitbox_collision: CollisionShape2D
+@export var ground_hitbox_collision: CollisionShape2D
+@export var air_hitbox_collision: CollisionShape2D
 
 var bounces: int = 0
 
@@ -38,16 +40,21 @@ func _ready() -> void:
 	var shape = CircleShape2D.new()
 	shape.radius = attack_data.radius
 	collision.shape = shape
-	hitbox_collision.shape = shape
+	ground_hitbox_collision.shape = shape
+	air_hitbox_collision.shape = shape
 	trail.width = (attack_data.radius - 1.0) * 2.0
 	
-	hitbox.damage = attack_data.hitbox_data.damage
-	hitbox.damage_cooldown = attack_data.hitbox_data.damage_cooldown
+	ground_hitbox.damage = attack_data.hitbox_data.damage
+	ground_hitbox.damage_cooldown = attack_data.hitbox_data.damage_cooldown
+	air_hitbox.damage = attack_data.hitbox_data.damage
+	air_hitbox.damage_cooldown = attack_data.hitbox_data.damage_cooldown
 	
 	collision_layer = collision_data.collision_layer
 	collision_mask = collision_data.collision_mask
-	hitbox.collision_layer = collision_layer
-	hitbox.collision_mask = collision_mask
+	ground_hitbox.collision_layer = collision_layer
+	ground_hitbox.collision_mask = collision_mask
+	air_hitbox.collision_layer = collision_layer
+	air_hitbox.collision_mask = collision_mask
 	
 	cur_speed = attack_data.start_speed
 	
@@ -120,6 +127,9 @@ func expire() -> void:
 	attack_data.expired.emit()
 	expired = true
 	
+	ground_hitbox_collision.set_deferred("disabled", true)
+	air_hitbox_collision.set_deferred("disabled", true)
+	
 	expire_particles.restart()
 	shadow.hide()
 	outtie.hide()
@@ -130,15 +140,21 @@ func expire() -> void:
 	queue_free()
 
 func _on_outtie_height_changed(new_height: float) -> void:
+	if expired:
+		return
+	
 	trail_holder.position = outtie.offset
-	#innie.height = new_height
+	air_hitbox.position = outtie.offset
+	collision.position = outtie.offset
 	
 	if new_height <= attack_data.radius:
-		if hitbox_collision.disabled:
-			hitbox_collision.set_deferred("disabled", false)
+		if ground_hitbox_collision.disabled:
+			ground_hitbox_collision.set_deferred("disabled", false)
+			air_hitbox_collision.set_deferred("disabled", true)
 	else:
-		if not hitbox_collision.disabled:
-			hitbox_collision.set_deferred("disabled", true)
+		if not ground_hitbox_collision.disabled:
+			ground_hitbox_collision.set_deferred("disabled", true)
+			air_hitbox_collision.set_deferred("disabled", false)
 
 
 func _on_outtie_bounced() -> void:

@@ -19,9 +19,12 @@ func _process(delta: float) -> void:
 	height -= speed * delta
 	offset = Vector2(0, -height).rotated(-global_rotation)
 	
-	if height < 1.0 and not is_zero_approx(speed):
+	if height < 1.0 and speed > 0.0:
 		speed *= -bounce
-		height = max(0.0, height)
+		if bounce > 0.0:
+			height = max(1.0, height)
+		else:
+			height = max(0.0, height)
 		
 		ground_hit.emit()
 		if bounce > 0.0:
