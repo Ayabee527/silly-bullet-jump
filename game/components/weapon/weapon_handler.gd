@@ -63,8 +63,13 @@ func shoot() -> void:
 	
 	MainCam.shake(weapon.camera_shake, 15, 15)
 	flash.restart()
-	fire_timer.start(weapon.cool_down)
 	weapon_idx = wrapi(weapon_idx + 1, 0, weapons.size())
+	if weapon.cool_down > 0.0:
+		fire_timer.start(weapon.cool_down)
+	else:
+		await get_tree().physics_frame
+		if firing:
+			shoot()
 
 func update_dazzle(color: Color) -> void:
 	dazzle.modulate = color
