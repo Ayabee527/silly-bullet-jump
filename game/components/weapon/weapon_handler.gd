@@ -26,7 +26,8 @@ func _ready() -> void:
 func set_weapon_idx(new_weapon_idx: int) -> void:
 	weapon_idx = new_weapon_idx
 	if weapons.size() > 0:
-		update_dazzle(weapons[weapon_idx].color)
+		if weapons[weapon_idx] != null:
+			update_dazzle(weapons[weapon_idx].color)
 
 func set_weapons(new_weapons: Array[Weapon]) -> void:
 	weapons = new_weapons
@@ -39,6 +40,9 @@ func set_firing(new_firing: bool) -> void:
 
 func shoot() -> void:
 	var weapon: Weapon = weapons[weapon_idx]
+	if weapon == null:
+		weapon_idx = wrapi(weapon_idx + 1, 0, weapons.size())
+		return
 	
 	for i: int in range(weapon.shots_per):
 		var attack = weapon.attack.instantiate() as Node2D
