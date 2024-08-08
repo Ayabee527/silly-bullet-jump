@@ -74,9 +74,6 @@ func _physics_process(delta: float) -> void:
 	if expired:
 		return
 	
-	if is_instance_valid(target) and attack_data.homes:
-		home_on_target(delta)
-	
 	if attack_data.accel_time > 0.0:
 		cur_speed = lerpf(
 			attack_data.start_speed, attack_data.end_speed,
@@ -89,11 +86,15 @@ func _physics_process(delta: float) -> void:
 	velocity = Vector2.from_angle(global_rotation) * cur_speed
 	global_position += velocity * delta
 
-func home_on_target(delta: float) -> void:
+func home_on_target() -> void:
 	var dir_to_target = global_position.direction_to(target.global_position)
 	var angle_to = Vector2.from_angle(global_rotation).angle_to(dir_to_target)
-	if abs(angle_to) > deg_to_rad(5.0):
-		global_rotation_degrees += attack_data.turn_speed * sign(angle_to) * delta
+	angle_to = rad_to_deg(angle_to)
+	angle_to += randf_range(-attack_data.inaccuracy, attack_data.inaccuracy)
+	var home_turn: float = signf(angle_to) * minf(
+		abs(angle_to), abs(attack_data.max_turn_angle)
+	)
+	global_rotation_degrees += home_turn
 
 func find_target() -> void:
 	if get_tree():
@@ -145,6 +146,14 @@ func _on_outtie_bounced() -> void:
 		return
 	
 	bounces += 1
+	
+	if attack_data.trigger_payload_on_bounce:
+		attack_data.trigger_payload.emit()
+	trail.clear_points()
+	find_target()
+	
+	if is_instance_valid(target) and attack_data.homes:
+		home_on_target()
 	
 	if bounces > attack_data.max_bounces:
 		expire()

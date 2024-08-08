@@ -58,6 +58,7 @@ func shoot() -> void:
 		
 		if weapon.payload:
 			attack_data.expired.connect( unleash_payload.bind(attack, weapon.payload) )
+			attack_data.trigger_payload.connect( unleash_payload.bind(attack, weapon.payload) )
 		
 		get_tree().current_scene.add_child(attack)
 	
@@ -94,6 +95,7 @@ func unleash_payload(carrier: Node2D, payload: Weapon) -> void:
 		
 		if payload.payload:
 			attack_data.expired.connect( unleash_payload.bind(attack, payload.payload) )
+			attack_data.trigger_payload.connect( unleash_payload.bind(attack, payload.payload) )
 		
 		get_tree().current_scene.add_child(attack)
 
