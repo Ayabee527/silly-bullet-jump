@@ -1,41 +1,44 @@
-[gd_resource type="Resource" script_class="ProjectileWeapon" load_steps=9 format=3 uid="uid://cd1fr1x7r2mcq"]
+[gd_resource type="Resource" script_class="FallProjectileWeapon" load_steps=9 format=3 uid="uid://dvk5txkp3wh8w"]
 
-[ext_resource type="PackedScene" uid="uid://c7aeni8wqem5v" path="res://weapons/attacks/projectile/projectile.tscn" id="1_4utky"]
+[ext_resource type="Script" path="res://components/weapon/fall_projectile_weapon.gd" id="1_b2s70"]
+[ext_resource type="PackedScene" uid="uid://dojg0abx5v5dt" path="res://weapons/attacks/fall_projectile/fall_projectile.tscn" id="1_brbln"]
 [ext_resource type="Script" path="res://components/weapon/attack_data/hitbox_data/hitbox_data.gd" id="2_xeda2"]
-[ext_resource type="Texture2D" uid="uid://lk2ngnj7kgkf" path="res://assets/textures/bullet_in.png" id="3_8huim"]
-[ext_resource type="Texture2D" uid="uid://c85efj2iwjxan" path="res://assets/textures/bullet_out.png" id="4_cnfxe"]
-[ext_resource type="Script" path="res://components/weapon/attack_data/projectile_data.gd" id="5_kd08c"]
-[ext_resource type="Script" path="res://components/weapon/projectile_weapon.gd" id="6_pd2i7"]
+[ext_resource type="Texture2D" uid="uid://bkk8o4mxdkkhq" path="res://assets/textures/fat_bullet_in.png" id="3_5fo3w"]
+[ext_resource type="Texture2D" uid="uid://qlvh8orfp87d" path="res://assets/textures/fat_bullet_out.png" id="4_8783g"]
+[ext_resource type="Script" path="res://components/weapon/attack_data/fall_projectile_data.gd" id="5_0csm6"]
 
-[sub_resource type="Resource" id="Resource_vcsp7"]
+[sub_resource type="Resource" id="Resource_tj467"]
 script = ExtResource("2_xeda2")
 damage = 1
 damage_cooldown = 0.5
 
-[sub_resource type="Resource" id="Resource_51jf5"]
-script = ExtResource("5_kd08c")
-life_time = 0.5
-start_speed = 384.0
-end_speed = 384.0
+[sub_resource type="Resource" id="Resource_xq4e7"]
+script = ExtResource("5_0csm6")
+start_speed = 128.0
+end_speed = 128.0
 accel_time = 0.0
-radius = 3.0
-max_pierces = 0.0
-homes = false
-targets = Array[String](["enemies"])
-turn_speed = 120.0
-in_texture = ExtResource("3_8huim")
-out_texture = ExtResource("4_cnfxe")
+radius = 4.0
+homes = true
+targets = Array[String](["player"])
+turn_speed = 360.0
+peak_height = 32.0
+time_to_peak = 0.5
+time_to_fall = 0.5
+max_bounces = 2
+bounce_factor = 0.75
+in_texture = ExtResource("3_5fo3w")
+out_texture = ExtResource("4_8783g")
 color = Color(1, 0, 0, 1)
-hitbox_data = SubResource("Resource_vcsp7")
+hitbox_data = SubResource("Resource_tj467")
 
 [resource]
-script = ExtResource("6_pd2i7")
-attack_data = SubResource("Resource_51jf5")
-attack = ExtResource("1_4utky")
+script = ExtResource("1_b2s70")
+attack_data = SubResource("Resource_xq4e7")
+attack = ExtResource("1_brbln")
 color = Color(1, 0, 0, 1)
-spread = 5.0
-rotation_offset = -15.0
-shots_per = 2
-angle_per_shot = 30.0
-cool_down = 0.1
+spread = 15.0
+rotation_offset = 0.0
+shots_per = 1
+angle_per_shot = 0.0
+cool_down = 0.25
 camera_shake = 5.0

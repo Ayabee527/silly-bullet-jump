@@ -10,5 +10,7 @@ shape = NodePath("Shape")
 collision = NodePath("CollisionShape2D")
 
 [node name="Shape" type="Polygon2D" parent="."]
+z_index = -5
+z_as_relative = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -8,5 +8,7 @@ shader = ExtResource("1_m1d72")
 shader_parameter/color = Color(0, 0, 0, 1)
 
 [node name="Shadow" type="Sprite2D"]
+z_index = -1
+z_as_relative = false
 material = SubResource("ShaderMaterial_fgq88")
 script = ExtResource("2_gr2cp")

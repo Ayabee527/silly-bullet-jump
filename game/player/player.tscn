@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://r8gin7txfwsn"]
+[gd_scene load_steps=19 format=3 uid="uid://r8gin7txfwsn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_7agls"]
 [ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_grdmo"]
@@ -13,15 +13,14 @@
 [ext_resource type="PackedScene" uid="uid://b1lcu4cgm3hjd" path="res://components/weapon/weapon_handler.tscn" id="11_xen4r"]
 [ext_resource type="Script" path="res://components/weapon/weapon.gd" id="12_sljwx"]
 [ext_resource type="Script" path="res://components/weapon/collision_data/collision_data.gd" id="12_t4dnd"]
-[ext_resource type="Resource" uid="uid://df1u6soyuk36s" path="res://player/default.tres" id="13_4hnll"]
-[ext_resource type="Resource" uid="uid://cd1fr1x7r2mcq" path="res://player/default2.tres" id="15_0a4om"]
+[ext_resource type="Resource" uid="uid://dvk5txkp3wh8w" path="res://player/default2.tres" id="15_0a4om"]
 
-[sub_resource type="Curve" id="Curve_w76bd"]
+[sub_resource type="Curve" id="Curve_rf5jd"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_l7ej8"]
-curve = SubResource("Curve_w76bd")
+curve = SubResource("Curve_rf5jd")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ln1he"]
 lifetime_randomness = 0.5
@@ -99,7 +98,7 @@ bounce = 0.25
 [node name="WeaponHandler" parent="." instance=ExtResource("11_xen4r")]
 visible = false
 collision_data = SubResource("Resource_vsh65")
-weapons = Array[ExtResource("12_sljwx")]([ExtResource("13_4hnll"), ExtResource("15_0a4om")])
+weapons = Array[ExtResource("12_sljwx")]([ExtResource("15_0a4om")])
 
 [connection signal="timeout" from="StateMachine/Jump/LandTimer" to="StateMachine/Jump" method="_on_land_timer_timeout"]
 [connection signal="height_changed" from="HeightSprite" to="." method="_on_height_sprite_height_changed"]

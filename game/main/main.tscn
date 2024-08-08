@@ -9,6 +9,8 @@ script = ExtResource("1_qmsla")
 arena = NodePath("Arena")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+z_index = -50
+z_as_relative = false
 custom_minimum_size = Vector2(512, 512)
 offset_left = -128.0
 offset_top = -128.0
