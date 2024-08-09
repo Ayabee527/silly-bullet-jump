@@ -18,6 +18,7 @@ extends Area2D
 @export var collision: CollisionShape2D
 @export var ground_hitbox_collision: CollisionShape2D
 @export var air_hitbox_collision: CollisionShape2D
+@export var arena_collision: CollisionShape2D
 
 var bounces: int = 0
 
@@ -28,6 +29,7 @@ var velocity: Vector2 = Vector2.ZERO
 var target: Node2D
 
 var expired: bool = false
+var out_of_arena: bool = false
 
 func _ready() -> void:
 	innie.texture = attack_data.in_texture
@@ -163,6 +165,10 @@ func _on_outtie_bounced() -> void:
 	
 	bounces += 1
 	
+	if out_of_arena:
+		expire()
+		return
+	
 	if attack_data.trigger_payload_on_bounce:
 		attack_data.trigger_payload.emit()
 	trail.clear_points()
@@ -173,3 +179,11 @@ func _on_outtie_bounced() -> void:
 	
 	if bounces > attack_data.max_bounces:
 		expire()
+
+
+func _on_arena_detector_area_entered(area: Area2D) -> void:
+	out_of_arena = false
+
+
+func _on_arena_detector_area_exited(area: Area2D) -> void:
+	out_of_arena = true

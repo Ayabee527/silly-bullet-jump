@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dojg0abx5v5dt"]
+[gd_scene load_steps=15 format=3 uid="uid://dojg0abx5v5dt"]
 
 [ext_resource type="Script" path="res://weapons/attacks/fall_projectile/fall_projectile.gd" id="1_2we8y"]
 [ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_4bt7i"]
@@ -42,7 +42,10 @@ radius = 4.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2d7rp"]
 radius = 4.0
 
-[node name="FallProjectile" type="Area2D" node_paths=PackedStringArray("outtie", "innie", "shadow", "trail_holder", "trail", "expire_particles", "ground_hitbox", "air_hitbox", "collision", "ground_hitbox_collision", "air_hitbox_collision")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_rlkl6"]
+radius = 4.0
+
+[node name="FallProjectile" type="Area2D" node_paths=PackedStringArray("outtie", "innie", "shadow", "trail_holder", "trail", "expire_particles", "ground_hitbox", "air_hitbox", "collision", "ground_hitbox_collision", "air_hitbox_collision", "arena_collision")]
 script = ExtResource("1_2we8y")
 outtie = NodePath("Outtie")
 innie = NodePath("Innie")
@@ -55,6 +58,7 @@ air_hitbox = NodePath("AirHitbox")
 collision = NodePath("CollisionShape2D")
 ground_hitbox_collision = NodePath("GroundHitbox/CollisionShape2D")
 air_hitbox_collision = NodePath("AirHitbox/CollisionShape2D")
+arena_collision = NodePath("ArenaDetector/CollisionShape2D")
 
 [node name="Shadow" parent="." node_paths=PackedStringArray("caster") instance=ExtResource("1_4bt7i")]
 texture = ExtResource("3_rh75g")
@@ -97,5 +101,15 @@ shape = SubResource("CircleShape2D_2d7rp")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AirHitbox"]
 shape = SubResource("CircleShape2D_2d7rp")
 
+[node name="ArenaDetector" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArenaDetector"]
+shape = SubResource("CircleShape2D_rlkl6")
+disabled = true
+
 [connection signal="bounced" from="Outtie" to="." method="_on_outtie_bounced"]
 [connection signal="height_changed" from="Outtie" to="." method="_on_outtie_height_changed"]
+[connection signal="area_entered" from="ArenaDetector" to="." method="_on_arena_detector_area_entered"]
+[connection signal="area_exited" from="ArenaDetector" to="." method="_on_arena_detector_area_exited"]

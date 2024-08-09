@@ -37,5 +37,5 @@ spread = 0.0
 rotation_offset = 0.0
 shots_per = 1
 angle_per_shot = 0.0
-cool_down = 0.1
+cool_down = 0.05
 camera_shake = 5.0

@@ -1,12 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://djtrw3ywrcfyr"]
+[gd_scene load_steps=5 format=3 uid="uid://djtrw3ywrcfyr"]
 
-[ext_resource type="PackedScene" uid="uid://qt1goniw06x" path="res://main/arena/arena.tscn" id="1_n3q3j"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_qmsla"]
+[ext_resource type="Texture2D" uid="uid://bolkpk5nj7xj6" path="res://assets/textures/square.png" id="2_wf403"]
 [ext_resource type="PackedScene" uid="uid://r8gin7txfwsn" path="res://player/player.tscn" id="3_vajbg"]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("arena")]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_27gso"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(160, 160, 1)
+angle_min = 1.07288e-05
+angle_max = 360.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 2.0
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+
+[node name="Main" type="Node2D"]
 script = ExtResource("1_qmsla")
-arena = NodePath("Arena")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -50
@@ -18,7 +32,16 @@ offset_right = 384.0
 offset_bottom = 384.0
 color = Color(0, 0, 0, 1)
 
-[node name="Arena" parent="." instance=ExtResource("1_n3q3j")]
+[node name="Funny" type="GPUParticles2D" parent="."]
+modulate = Color(0, 0.284344, 0.249882, 1)
+z_index = -5
 position = Vector2(128, 128)
+amount = 2000
+process_material = SubResource("ParticleProcessMaterial_27gso")
+texture = ExtResource("2_wf403")
+lifetime = 10.0
+preprocess = 3.0
+randomness = 1.0
 
-[node name="Player" parent="Arena" instance=ExtResource("3_vajbg")]
+[node name="Player" parent="." instance=ExtResource("3_vajbg")]
+position = Vector2(128, 128)
