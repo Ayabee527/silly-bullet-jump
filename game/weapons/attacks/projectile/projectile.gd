@@ -45,6 +45,7 @@ func _ready() -> void:
 	
 	hitbox.damage = attack_data.hitbox_data.damage
 	hitbox.damage_cooldown = attack_data.hitbox_data.damage_cooldown
+	hitbox.height_radius = attack_data.radius
 	
 	collision_layer = collision_data.collision_layer
 	collision_mask = collision_data.collision_mask
@@ -120,6 +121,7 @@ func _on_life_timer_timeout() -> void:
 func _on_outtie_height_changed(new_height: float) -> void:
 	trail_holder.position = outtie.offset
 	innie.height = new_height
+	collision.position = outtie.offset
 
 
 func _on_body_entered(body: Node2D) -> void:

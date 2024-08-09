@@ -14,14 +14,14 @@
 				"2af7c30d-ec3c-4d6b-99d9-6a7453579049",
 				"2f49c3a6-a463-4807-b725-84d4e3ba22f5",
 				"b8ad0d90-04d6-47a8-9c14-72d5f6c44895",
-				"607fb727-40c4-435d-b21a-be17eb49f375"
+				"607fb727-40c4-435d-b21a-be17eb49f375",
+				"1acc179e-98f3-41c9-96b2-286b5cd91b74"
 			]
 		},
 		{
 			"uuid": "a8f921b3-b1c1-47e3-b6c7-cfb548ccce2f",
 			"title": "Doing",
 			"tasks": [
-				"6d6bb672-e4b5-4c23-a0ee-33f50f9a43cc",
 				"57f1b1fd-1917-4c3d-bc79-c4c5b6a66761",
 				"6e27a836-31d4-4d8b-a531-68baa70665fc",
 				"5b1b4857-dd61-4ff3-8b52-91f499327c4e"
@@ -31,6 +31,7 @@
 			"uuid": "efca3089-ecee-4e5e-839c-954c2e8d7895",
 			"title": "Done",
 			"tasks": [
+				"6d6bb672-e4b5-4c23-a0ee-33f50f9a43cc",
 				"639c757b-6be8-44f4-ad3e-4266eacbbc42",
 				"ecbe8798-ef47-4704-833c-7d9d42111c94",
 				"df0dd354-fc04-4f4a-8fa5-3c2c4dd18f41",
@@ -167,6 +168,13 @@
 		{
 			"uuid": "6d6bb672-e4b5-4c23-a0ee-33f50f9a43cc",
 			"title": "air and ground hitboxes",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "1acc179e-98f3-41c9-96b2-286b5cd91b74",
+			"title": "bullet casings",
 			"description": "",
 			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
 			"steps": []

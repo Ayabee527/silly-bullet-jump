@@ -1,8 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://r8gin7txfwsn"]
+[gd_scene load_steps=21 format=3 uid="uid://r8gin7txfwsn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_7agls"]
 [ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_grdmo"]
 [ext_resource type="PackedScene" uid="uid://ck7giesvc1amw" path="res://components/height_sprite/height_sprite.tscn" id="2_f80gu"]
+[ext_resource type="Script" path="res://components/health/health.gd" id="2_fi2y7"]
 [ext_resource type="Script" path="res://components/states/state_machine.gd" id="2_jpy1m"]
 [ext_resource type="Texture2D" uid="uid://dbbp338ckjwna" path="res://assets/textures/player.png" id="2_uwysf"]
 [ext_resource type="Script" path="res://player/states/idle.gd" id="3_pwi1t"]
@@ -14,6 +15,7 @@
 [ext_resource type="Script" path="res://components/weapon/weapon.gd" id="12_sljwx"]
 [ext_resource type="Script" path="res://components/weapon/collision_data/collision_data.gd" id="12_t4dnd"]
 [ext_resource type="Resource" uid="uid://df1u6soyuk36s" path="res://player/default.tres" id="13_4hnll"]
+[ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="16_7o6cd"]
 
 [sub_resource type="Curve" id="Curve_rf5jd"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -47,12 +49,17 @@ script = ExtResource("12_t4dnd")
 collision_layer = 16
 collision_mask = 8
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "shadow", "land_particles", "weapon_handler") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "shadow", "land_particles", "weapon_handler", "hurtbox", "hurtbox_collision") groups=["player"]]
 script = ExtResource("1_7agls")
 sprite = NodePath("HeightSprite")
 shadow = NodePath("Shadow")
 land_particles = NodePath("Land")
 weapon_handler = NodePath("WeaponHandler")
+hurtbox = NodePath("Hurtbox")
+hurtbox_collision = NodePath("Hurtbox/CollisionShape2D")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_fi2y7")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_jpy1m")
@@ -99,6 +106,12 @@ bounce = 0.25
 visible = false
 collision_data = SubResource("Resource_vsh65")
 weapons = Array[ExtResource("12_sljwx")]([ExtResource("13_4hnll")])
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("16_7o6cd")]
+height_radius = 3.0
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 
 [connection signal="timeout" from="StateMachine/Jump/LandTimer" to="StateMachine/Jump" method="_on_land_timer_timeout"]
 [connection signal="height_changed" from="HeightSprite" to="." method="_on_height_sprite_height_changed"]

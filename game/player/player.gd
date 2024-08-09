@@ -13,6 +13,8 @@ signal spawned()
 @export var shadow: Shadow
 @export var land_particles: GPUParticles2D
 @export var weapon_handler: WeaponHandler
+@export var hurtbox: Hurtbox
+@export var hurtbox_collision: CollisionShape2D
 
 var has_spawned: bool = false
 
@@ -39,3 +41,5 @@ func get_move_vector() -> Vector2:
 
 func _on_height_sprite_height_changed(new_height: float) -> void:
 	weapon_handler.position = sprite.offset
+	hurtbox_collision.position = sprite.offset
+	hurtbox.height = new_height
