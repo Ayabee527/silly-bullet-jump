@@ -39,6 +39,9 @@ func set_firing(new_firing: bool) -> void:
 		shoot()
 
 func shoot() -> void:
+	if weapons.size() <= 0:
+		return
+	
 	var weapon: Weapon = weapons[weapon_idx]
 	if weapon == null:
 		weapon_idx = wrapi(weapon_idx + 1, 0, weapons.size())
@@ -66,7 +69,7 @@ func shoot() -> void:
 		
 		get_tree().current_scene.add_child(attack)
 	
-	MainCam.shake(weapon.camera_shake, 15, 15)
+	MainCam.shake(weapon.camera_shake_shake, weapon.camera_shake_speed, weapon.camera_shake_decay)
 	flash.restart()
 	weapon_idx = wrapi(weapon_idx + 1, 0, weapons.size())
 	if weapon.cool_down > 0.0:
@@ -102,6 +105,8 @@ func unleash_payload(carrier: Node2D, payload: Weapon) -> void:
 			attack_data.trigger_payload.connect( unleash_payload.bind(attack, payload.payload) )
 		
 		get_tree().current_scene.add_child(attack)
+	
+	MainCam.shake(payload.camera_shake_shake, payload.camera_shake_speed, payload.camera_shake_decay)
 
 func _on_fire_timer_timeout() -> void:
 	if firing:

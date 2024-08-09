@@ -12,11 +12,9 @@ signal hurt(hitbox: Hitbox)
 @export_group("Inner Dependencies")
 @export var invinc_timer: Timer
 
-var active_hitboxes: Array[Hitbox] = []:
-	set = set_active_hitboxes
+var active_hitboxes: Array[Hitbox] = []
 
-func set_active_hitboxes(new_active_hitboxes: Array[Hitbox]) -> void:
-	active_hitboxes = new_active_hitboxes
+func _process(delta: float) -> void:
 	if active_hitboxes.size() > 0:
 		if invinc_timer.is_stopped():
 			take_damage()
@@ -33,7 +31,8 @@ func take_damage() -> void:
 	invinc_timer.start(chosen_hitbox.damage_cooldown)
 
 func is_in_height_range(hitbox: Hitbox) -> bool:
-	var range = height + height_radius + hitbox.height_radius
+	var range = height_radius + hitbox.height_radius
+	#prints(height, hitbox.height, range)
 	
 	return abs(height - hitbox.height) <= range
 

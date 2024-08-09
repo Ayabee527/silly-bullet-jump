@@ -15,6 +15,7 @@ signal spawned()
 @export var weapon_handler: WeaponHandler
 @export var hurtbox: Hurtbox
 @export var hurtbox_collision: CollisionShape2D
+@export var hurt_player: AnimationPlayer
 
 var has_spawned: bool = false
 
@@ -43,3 +44,9 @@ func _on_height_sprite_height_changed(new_height: float) -> void:
 	weapon_handler.position = sprite.offset
 	hurtbox_collision.position = sprite.offset
 	hurtbox.height = new_height
+
+
+func _on_health_was_hurt(new_health: int, amount: int) -> void:
+	if new_health > 0:
+		hurt_player.play("hurt")
+		MainCam.shake(30, 15, 5)

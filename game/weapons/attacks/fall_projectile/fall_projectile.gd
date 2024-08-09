@@ -1,4 +1,4 @@
-class_name FallProjectile
+class_name FallProjectileAttack
 extends Area2D
 
 @export_group("Data")

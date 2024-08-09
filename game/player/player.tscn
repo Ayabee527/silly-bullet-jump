@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://r8gin7txfwsn"]
+[gd_scene load_steps=27 format=3 uid="uid://r8gin7txfwsn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_7agls"]
 [ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_grdmo"]
@@ -12,10 +12,11 @@
 [ext_resource type="Script" path="res://player/states/jump.gd" id="5_456ib"]
 [ext_resource type="Texture2D" uid="uid://bjxxn4vcj88r2" path="res://assets/textures/circle.png" id="9_00173"]
 [ext_resource type="PackedScene" uid="uid://b1lcu4cgm3hjd" path="res://components/weapon/weapon_handler.tscn" id="11_xen4r"]
+[ext_resource type="Shader" path="res://flash.gdshader" id="12_1awce"]
 [ext_resource type="Script" path="res://components/weapon/weapon.gd" id="12_sljwx"]
 [ext_resource type="Script" path="res://components/weapon/collision_data/collision_data.gd" id="12_t4dnd"]
-[ext_resource type="Resource" uid="uid://df1u6soyuk36s" path="res://player/default.tres" id="13_4hnll"]
 [ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="16_7o6cd"]
+[ext_resource type="Resource" uid="uid://dcq4j0hhb72fp" path="res://player/bouncy.tres" id="16_nrb8f"]
 
 [sub_resource type="Curve" id="Curve_rf5jd"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -44,12 +45,59 @@ scale_min = 0.1
 scale_max = 0.2
 scale_curve = SubResource("CurveTexture_l7ej8")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_auq6n"]
+shader = ExtResource("12_1awce")
+shader_parameter/active = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4i8rk"]
+radius = 4.0
+
 [sub_resource type="Resource" id="Resource_vsh65"]
 script = ExtResource("12_t4dnd")
 collision_layer = 16
 collision_mask = 8
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "shadow", "land_particles", "weapon_handler", "hurtbox", "hurtbox_collision") groups=["player"]]
+[sub_resource type="Animation" id="Animation_yd6fn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HeightSprite:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_vr4bg"]
+resource_name = "hurt"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HeightSprite:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sk8s3"]
+_data = {
+"RESET": SubResource("Animation_yd6fn"),
+"hurt": SubResource("Animation_vr4bg")
+}
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "shadow", "land_particles", "weapon_handler", "hurtbox", "hurtbox_collision", "hurt_player") groups=["player"]]
+collision_layer = 6
+collision_mask = 96
 script = ExtResource("1_7agls")
 sprite = NodePath("HeightSprite")
 shadow = NodePath("Shadow")
@@ -57,9 +105,11 @@ land_particles = NodePath("Land")
 weapon_handler = NodePath("WeaponHandler")
 hurtbox = NodePath("Hurtbox")
 hurtbox_collision = NodePath("Hurtbox/CollisionShape2D")
+hurt_player = NodePath("HurtPlayer")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_fi2y7")
+max_health = 10
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_jpy1m")
@@ -99,19 +149,31 @@ explosiveness = 1.0
 randomness = 1.0
 
 [node name="HeightSprite" parent="." instance=ExtResource("2_f80gu")]
+z_index = 1
+z_as_relative = false
+material = SubResource("ShaderMaterial_auq6n")
 texture = ExtResource("2_uwysf")
 bounce = 0.25
 
-[node name="WeaponHandler" parent="." instance=ExtResource("11_xen4r")]
-visible = false
-collision_data = SubResource("Resource_vsh65")
-weapons = Array[ExtResource("12_sljwx")]([ExtResource("13_4hnll")])
-
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("16_7o6cd")]
+collision_layer = 4
+collision_mask = 96
 height_radius = 3.0
 health = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_4i8rk")
 
+[node name="WeaponHandler" parent="." instance=ExtResource("11_xen4r")]
+visible = false
+collision_data = SubResource("Resource_vsh65")
+weapons = Array[ExtResource("12_sljwx")]([ExtResource("16_nrb8f")])
+
+[node name="HurtPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sk8s3")
+}
+
+[connection signal="was_hurt" from="Health" to="." method="_on_health_was_hurt"]
 [connection signal="timeout" from="StateMachine/Jump/LandTimer" to="StateMachine/Jump" method="_on_land_timer_timeout"]
 [connection signal="height_changed" from="HeightSprite" to="." method="_on_height_sprite_height_changed"]
