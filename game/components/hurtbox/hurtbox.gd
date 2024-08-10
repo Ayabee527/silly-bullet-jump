@@ -26,6 +26,7 @@ func take_damage() -> void:
 		if not is_in_height_range(chosen_hitbox):
 			return
 	
+	chosen_hitbox.hit.emit(self)
 	health.hurt(chosen_hitbox.damage)
 	
 	invinc_timer.start(chosen_hitbox.damage_cooldown)

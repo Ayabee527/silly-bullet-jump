@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://djtrw3ywrcfyr"]
+[gd_scene load_steps=6 format=3 uid="uid://djtrw3ywrcfyr"]
 
 [ext_resource type="Script" path="res://main/main.gd" id="1_qmsla"]
 [ext_resource type="Texture2D" uid="uid://bolkpk5nj7xj6" path="res://assets/textures/square.png" id="2_wf403"]
 [ext_resource type="PackedScene" uid="uid://r8gin7txfwsn" path="res://player/player.tscn" id="3_vajbg"]
+[ext_resource type="PackedScene" uid="uid://bn30q4bbbx7j1" path="res://enemies/sniper/sniper.tscn" id="4_3vsl7"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_27gso"]
 lifetime_randomness = 0.5
@@ -48,3 +49,6 @@ visibility_rect = Rect2(-128, -128, 256, 256)
 
 [node name="Player" parent="." instance=ExtResource("3_vajbg")]
 position = Vector2(128, 128)
+
+[node name="Sniper" parent="." instance=ExtResource("4_3vsl7")]
+position = Vector2(64, 64)

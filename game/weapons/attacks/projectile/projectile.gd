@@ -111,6 +111,8 @@ func expire() -> void:
 	outtie.hide()
 	innie.hide()
 	
+	hitbox_collision.set_deferred("disabled", true)
+	
 	await expire_particles.finished
 	queue_free()
 
@@ -123,8 +125,7 @@ func _on_outtie_height_changed(new_height: float) -> void:
 	innie.height = new_height
 	collision.position = outtie.offset
 
-
-func _on_body_entered(body: Node2D) -> void:
+func _on_hitbox_hit(_hurtbox: Hurtbox) -> void:
 	pierces += 1
 	
 	if pierces > attack_data.max_pierces:

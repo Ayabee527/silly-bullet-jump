@@ -1,0 +1,143 @@
+[gd_scene load_steps=23 format=3 uid="uid://bn30q4bbbx7j1"]
+
+[ext_resource type="Script" path="res://enemies/sniper/sniper.gd" id="1_4ypgg"]
+[ext_resource type="PackedScene" uid="uid://b0h3spmyp72xm" path="res://components/shadow/shadow.tscn" id="1_p7ta1"]
+[ext_resource type="PackedScene" uid="uid://ck7giesvc1amw" path="res://components/height_sprite/height_sprite.tscn" id="2_6q3m2"]
+[ext_resource type="Script" path="res://components/health/health.gd" id="2_hqpac"]
+[ext_resource type="Script" path="res://components/states/state_machine.gd" id="3_4v6w1"]
+[ext_resource type="Texture2D" uid="uid://phg74qje7a77" path="res://assets/textures/sniper.png" id="3_lx7wi"]
+[ext_resource type="Script" path="res://enemies/sniper/states/leap.gd" id="4_fei1q"]
+[ext_resource type="PackedScene" uid="uid://b1lcu4cgm3hjd" path="res://components/weapon/weapon_handler.tscn" id="4_h2wyo"]
+[ext_resource type="Script" path="res://enemies/sniper/states/target.gd" id="5_t7ur7"]
+[ext_resource type="Script" path="res://enemies/sniper/states/shoot.gd" id="6_e5h4o"]
+[ext_resource type="PackedScene" uid="uid://dvvktbgt1ayca" path="res://components/hurtbox/hurtbox.tscn" id="7_ka0p7"]
+[ext_resource type="Shader" path="res://flash.gdshader" id="10_kglt4"]
+[ext_resource type="Script" path="res://components/weapon/collision_data/collision_data.gd" id="11_3kifm"]
+[ext_resource type="Script" path="res://components/weapon/weapon.gd" id="12_x1wwh"]
+[ext_resource type="Resource" uid="uid://6hfnveffuwch" path="res://enemies/sniper/snipe.tres" id="13_4h8g5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2m3e5"]
+shader = ExtResource("10_kglt4")
+shader_parameter/active = false
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f71lg"]
+radius = 6.0
+
+[sub_resource type="Resource" id="Resource_ovdrj"]
+script = ExtResource("11_3kifm")
+collision_layer = 32
+collision_mask = 4
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hepry"]
+radius = 6.0
+
+[sub_resource type="Animation" id="Animation_q7dbs"]
+resource_name = "hurt"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HeightSprite:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_dlpnd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HeightSprite:material:shader_parameter/active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bx68y"]
+_data = {
+"RESET": SubResource("Animation_dlpnd"),
+"hurt": SubResource("Animation_q7dbs")
+}
+
+[node name="Sniper" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "weapon_handler", "hurtbox", "hurtbox_collision", "hurt_player") groups=["enemies"]]
+motion_mode = 1
+script = ExtResource("1_4ypgg")
+sprite = NodePath("HeightSprite")
+weapon_handler = NodePath("WeaponHandler")
+hurtbox = NodePath("Hurtbox")
+hurtbox_collision = NodePath("Hurtbox/CollisionShape2D")
+hurt_player = NodePath("HurtPlayer")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_hqpac")
+max_health = 100
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_4v6w1")
+initial_state = NodePath("Leap")
+
+[node name="Leap" type="Node" parent="StateMachine"]
+script = ExtResource("4_fei1q")
+
+[node name="Target" type="Node" parent="StateMachine" node_paths=PackedStringArray("wait_timer")]
+script = ExtResource("5_t7ur7")
+wait_timer = NodePath("WaitTimer")
+
+[node name="WaitTimer" type="Timer" parent="StateMachine/Target"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Shoot" type="Node" parent="StateMachine" node_paths=PackedStringArray("recoil_timer")]
+script = ExtResource("6_e5h4o")
+recoil_timer = NodePath("RecoilTimer")
+
+[node name="RecoilTimer" type="Timer" parent="StateMachine/Shoot"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Shadow" parent="." node_paths=PackedStringArray("caster") instance=ExtResource("1_p7ta1")]
+texture = ExtResource("3_lx7wi")
+caster = NodePath("../HeightSprite")
+
+[node name="HeightSprite" parent="." instance=ExtResource("2_6q3m2")]
+modulate = Color(0.2844, 0.756293, 0.79, 1)
+material = SubResource("ShaderMaterial_2m3e5")
+texture = ExtResource("3_lx7wi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_f71lg")
+
+[node name="WeaponHandler" parent="." instance=ExtResource("4_h2wyo")]
+collision_data = SubResource("Resource_ovdrj")
+weapons = Array[ExtResource("12_x1wwh")]([ExtResource("13_4h8g5")])
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health") instance=ExtResource("7_ka0p7")]
+height_radius = 3.0
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_hepry")
+
+[node name="HurtPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_bx68y")
+}
+
+[connection signal="was_hurt" from="Health" to="." method="_on_health_was_hurt"]
+[connection signal="timeout" from="StateMachine/Target/WaitTimer" to="StateMachine/Target" method="_on_wait_timer_timeout"]
+[connection signal="timeout" from="StateMachine/Shoot/RecoilTimer" to="StateMachine/Shoot" method="_on_recoil_timer_timeout"]
+[connection signal="ground_hit" from="HeightSprite" to="StateMachine/Leap" method="_on_height_sprite_ground_hit"]
+[connection signal="ground_hit" from="HeightSprite" to="StateMachine/Shoot" method="_on_height_sprite_ground_hit"]
+[connection signal="height_changed" from="HeightSprite" to="." method="_on_height_sprite_height_changed"]
+[connection signal="fired" from="WeaponHandler" to="StateMachine/Shoot" method="_on_weapon_handler_fired"]

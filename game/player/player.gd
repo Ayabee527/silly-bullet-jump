@@ -49,4 +49,4 @@ func _on_height_sprite_height_changed(new_height: float) -> void:
 func _on_health_was_hurt(new_health: int, amount: int) -> void:
 	if new_health > 0:
 		hurt_player.play("hurt")
-		MainCam.shake(30, 15, 5)
+		MainCam.shake(15.0 * amount, 15, 5.0 * amount)

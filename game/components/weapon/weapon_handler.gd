@@ -69,6 +69,7 @@ func shoot() -> void:
 		
 		get_tree().current_scene.add_child(attack)
 	
+	fired.emit()
 	MainCam.shake(weapon.camera_shake_shake, weapon.camera_shake_speed, weapon.camera_shake_decay)
 	flash.restart()
 	weapon_idx = wrapi(weapon_idx + 1, 0, weapons.size())

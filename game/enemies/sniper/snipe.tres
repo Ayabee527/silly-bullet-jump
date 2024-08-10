@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="ProjectileWeapon" load_steps=8 format=3 uid="uid://6hfnveffuwch"]
+
+[ext_resource type="Script" path="res://components/weapon/projectile_weapon.gd" id="1_44isw"]
+[ext_resource type="PackedScene" uid="uid://c7aeni8wqem5v" path="res://weapons/attacks/projectile/projectile.tscn" id="1_yfmtn"]
+[ext_resource type="Script" path="res://components/weapon/attack_data/hitbox_data/hitbox_data.gd" id="2_ysnj1"]
+[ext_resource type="Texture2D" uid="uid://b08hpb35mhb75" path="res://assets/textures/light_bullet.png" id="3_c2x6j"]
+[ext_resource type="Script" path="res://components/weapon/attack_data/projectile_data.gd" id="4_l72at"]
+
+[sub_resource type="Resource" id="Resource_2x547"]
+script = ExtResource("2_ysnj1")
+damage = 2
+damage_cooldown = 0.5
+
+[sub_resource type="Resource" id="Resource_16bli"]
+script = ExtResource("4_l72at")
+life_time = 1.0
+start_speed = 512.0
+end_speed = 0.0
+accel_time = 1.0
+radius = 1.0
+max_pierces = 0.0
+homes = false
+targets = Array[String](["enemies"])
+turn_speed = 360.0
+out_texture = ExtResource("3_c2x6j")
+color = Color(0.2844, 0.756293, 0.79, 1)
+hitbox_data = SubResource("Resource_2x547")
+
+[resource]
+script = ExtResource("1_44isw")
+attack_data = SubResource("Resource_16bli")
+attack = ExtResource("1_yfmtn")
+color = Color(0.2844, 0.756293, 0.79, 1)
+spread = 0.0
+rotation_offset = 0.0
+shots_per = 1
+angle_per_shot = 0.0
+cool_down = 0.5
+camera_shake_shake = 20.0
+camera_shake_speed = 15.0
+camera_shake_decay = 15.0
