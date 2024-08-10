@@ -20,7 +20,7 @@ signal spawned()
 var has_spawned: bool = false
 
 func _ready() -> void:
-	pass
+	MainCam.target = self
 
 func _physics_process(delta: float) -> void:
 	var look_transform = global_transform.looking_at(get_global_mouse_position())

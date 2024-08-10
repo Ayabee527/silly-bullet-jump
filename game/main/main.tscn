@@ -8,23 +8,23 @@
 lifetime_randomness = 0.5
 particle_flag_disable_z = true
 emission_shape = 3
-emission_box_extents = Vector3(160, 160, 1)
+emission_box_extents = Vector3(128, 128, 1)
 angle_min = 1.07288e-05
 angle_max = 360.0
-angular_velocity_min = -180.0
-angular_velocity_max = 180.0
-orbit_velocity_min = -0.0999999
-orbit_velocity_max = 9.49949e-08
 gravity = Vector3(0, 0, 0)
-scale_min = 0.5
-scale_max = 2.0
+scale_min = 5.0
+scale_max = 10.0
 hue_variation_min = -0.1
 hue_variation_max = 0.1
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_qmsla")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Parallax2D" type="Parallax2D" parent="."]
+repeat_size = Vector2(256, 256)
+repeat_times = 2
+
+[node name="ColorRect" type="ColorRect" parent="Parallax2D"]
 z_index = -50
 z_as_relative = false
 custom_minimum_size = Vector2(512, 512)
@@ -34,16 +34,17 @@ offset_right = 384.0
 offset_bottom = 384.0
 color = Color(0, 0, 0, 1)
 
-[node name="Funny" type="GPUParticles2D" parent="."]
+[node name="Funny" type="GPUParticles2D" parent="Parallax2D"]
 modulate = Color(0, 0.284344, 0.249882, 1)
 z_index = -5
 position = Vector2(128, 128)
-amount = 2000
+amount = 100
 process_material = SubResource("ParticleProcessMaterial_27gso")
 texture = ExtResource("2_wf403")
 lifetime = 10.0
-preprocess = 3.0
+preprocess = 10.0
 randomness = 1.0
+visibility_rect = Rect2(-128, -128, 256, 256)
 
 [node name="Player" parent="." instance=ExtResource("3_vajbg")]
 position = Vector2(128, 128)
