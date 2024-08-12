@@ -8,12 +8,16 @@ func enter(_msg:={}) -> void:
 	)
 	
 	land_timer.start(player.jump_time_to_peak + player.jump_time_to_fall)
+	player.weapon_handler.firing = false
 
 func physics_update(delta: float) -> void:
 	var move_vector = player.get_move_vector()
 	player.velocity = move_vector * player.move_speed
 
 func _on_land_timer_timeout() -> void:
+	if Input.is_action_pressed("shoot"):
+		player.weapon_handler.firing = true
+	
 	player.land_particles.restart()
 	if player.get_move_vector().length() > 0.0:
 		state_machine.transition_to("Move")

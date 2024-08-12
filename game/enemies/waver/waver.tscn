@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://7lpmir2ryw0h"]
+
+[node name="Waver" type="CharacterBody2D"]
