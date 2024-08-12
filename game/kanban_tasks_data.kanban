@@ -13,22 +13,25 @@
 			"tasks": [
 				"2af7c30d-ec3c-4d6b-99d9-6a7453579049",
 				"2f49c3a6-a463-4807-b725-84d4e3ba22f5",
+				"7e3cde90-de46-4359-a1fc-e6722f04042b",
 				"b8ad0d90-04d6-47a8-9c14-72d5f6c44895",
 				"607fb727-40c4-435d-b21a-be17eb49f375",
-				"1acc179e-98f3-41c9-96b2-286b5cd91b74"
+				"1acc179e-98f3-41c9-96b2-286b5cd91b74",
+				"87a49bb0-d324-4daa-9400-5c6cf130fdd6"
 			]
 		},
 		{
 			"uuid": "a8f921b3-b1c1-47e3-b6c7-cfb548ccce2f",
 			"title": "Doing",
 			"tasks": [
-				"5b1b4857-dd61-4ff3-8b52-91f499327c4e"
+				"aabe65aa-7906-47c9-bbc7-3e92de1760e5"
 			]
 		},
 		{
 			"uuid": "efca3089-ecee-4e5e-839c-954c2e8d7895",
 			"title": "Done",
 			"tasks": [
+				"5b1b4857-dd61-4ff3-8b52-91f499327c4e",
 				"6f1711de-db22-4502-940c-7c797cee1bcc",
 				"6e27a836-31d4-4d8b-a531-68baa70665fc",
 				"57f1b1fd-1917-4c3d-bc79-c4c5b6a66761",
@@ -70,7 +73,7 @@
 		},
 		{
 			"uuid": "5b1b4857-dd61-4ff3-8b52-91f499327c4e",
-			"title": "flying enemy",
+			"title": "flying enemy (hopper)",
 			"description": "",
 			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
 			"steps": []
@@ -183,6 +186,27 @@
 		{
 			"uuid": "6f1711de-db22-4502-940c-7c797cee1bcc",
 			"title": "player cant shoot mid jump",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "aabe65aa-7906-47c9-bbc7-3e92de1760e5",
+			"title": "squash n stretch",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "87a49bb0-d324-4daa-9400-5c6cf130fdd6",
+			"title": "New task",
+			"description": "",
+			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
+			"steps": []
+		},
+		{
+			"uuid": "7e3cde90-de46-4359-a1fc-e6722f04042b",
+			"title": "real flying enemy",
 			"description": "",
 			"category": "5ca6cd86-68ec-4514-9b86-51b23825b002",
 			"steps": []

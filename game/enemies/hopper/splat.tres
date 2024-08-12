@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="FallProjectileWeapon" load_steps=9 format=3 uid="uid://bysqm3esd5psu"]
+
+[ext_resource type="Script" path="res://components/weapon/fall_projectile_weapon.gd" id="1_8b3tr"]
+[ext_resource type="PackedScene" uid="uid://dojg0abx5v5dt" path="res://weapons/attacks/fall_projectile/fall_projectile.tscn" id="1_djorp"]
+[ext_resource type="Script" path="res://components/weapon/attack_data/hitbox_data/hitbox_data.gd" id="2_8wcob"]
+[ext_resource type="Script" path="res://components/weapon/attack_data/fall_projectile_data.gd" id="2_idlr5"]
+[ext_resource type="Texture2D" uid="uid://bkk8o4mxdkkhq" path="res://assets/textures/fat_bullet_in.png" id="3_30cw0"]
+[ext_resource type="Texture2D" uid="uid://qlvh8orfp87d" path="res://assets/textures/fat_bullet_out.png" id="4_8gle6"]
+
+[sub_resource type="Resource" id="Resource_c0i1g"]
+script = ExtResource("2_8wcob")
+damage = 1
+damage_cooldown = 0.2
+
+[sub_resource type="Resource" id="Resource_orbjr"]
+script = ExtResource("2_idlr5")
+start_speed = 32.0
+end_speed = 32.0
+accel_time = 0.0
+radius = 4.0
+homes = true
+targets = Array[String](["player"])
+max_turn_angle = 60.0
+inaccuracy = 15.0
+peak_height = 32.0
+time_to_peak = 0.5
+time_to_fall = 0.5
+max_bounces = 2
+bounce_factor = 1.0
+trigger_payload_on_bounce = false
+in_texture = ExtResource("3_30cw0")
+out_texture = ExtResource("4_8gle6")
+color = Color(1, 1, 0.286275, 1)
+hitbox_data = SubResource("Resource_c0i1g")
+
+[resource]
+script = ExtResource("1_8b3tr")
+attack_data = SubResource("Resource_orbjr")
+attack = ExtResource("1_djorp")
+color = Color(1, 1, 0.286275, 1)
+spread = 15.0
+rotation_offset = 0.0
+shots_per = 6
+angle_per_shot = 60.0
+cool_down = 0.1
+camera_shake_shake = 10.0
+camera_shake_speed = 15.0
+camera_shake_decay = 15.0
